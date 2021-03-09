@@ -1,0 +1,62 @@
+html, body {
+	font-family: 'Poppins', sans-serif;
+	height: 100%;
+	width: 100%;
+	margin: 0em;
+	padding: 0em;
+}
+
+header {
+	display: block;
+	padding: 1em 0em 1em 0em;
+}
+header h1 {
+	color: rgb(66,133,244);
+	width: 20%;
+	margin: 0.15em 0em 0em 0em;
+	padding: 0em;
+	float: left;
+}
+
+nav {
+	float: right;
+	width: 80%;
+}
+nav a {
+	position: relative;
+	display: inline-block;
+	margin-left: 2em;
+	margin-top: 1em;
+}
+
+.clearfix {
+	overflow: auto;
+}
+
+#sign-in-button {
+	float: right;
+	background-color: rgb(66,133,244);
+	margin: 0em 1em 0em 0em;
+	padding: 1em;
+	border-radius: 2em;
+	color: white;
+	text-decoration: none;
+	width: 5em;
+	text-align: center;
+}
+
+.main {
+	clear: both;
+}
+.left-panel {
+	float: left;
+	width: 20em;
+	border: 2px solid gray;
+	clear: left;
+}
+
+.right-panel {
+	margin-left: 20.25em;
+	margin-top: 0em;
+	border: 2px solid gray;
+}
