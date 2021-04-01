@@ -13,6 +13,7 @@ header {
 header h1 {
 	color: rgb(66,133,244);
 	width: 20%;
+	min-width: 400px;
 	margin: 0.15em 0em 0em 0em;
 	padding: 0em;
 	float: left;
@@ -48,15 +49,30 @@ nav a {
 .main {
 	clear: both;
 }
+
 .left-panel {
 	float: left;
 	width: 20em;
-	border: 2px solid gray;
 	clear: left;
+}
+.left-panel h2 {
+	margin: 0em;
 }
 
 .right-panel {
 	margin-left: 20.25em;
 	margin-top: 0em;
-	border: 2px solid gray;
+}
+.right-panel h2 {
+	margin: 1em;
+}
+
+.threads {
+	padding: 2em;
+	margin: 1em;
+	border-radius: 2em;
+	background-color: rgb(200,200,200);
+}
+.threads h4 {
+	margin: 0em;
 }
