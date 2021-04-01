@@ -15,12 +15,14 @@
 			<nav>
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
+				<a href="new-thread.php">+ New Thread</a>
 				<?php 
 					session_start();
 
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
+						$_SESSION["userId"] = 1;
 					}
 
 					if ($_SESSION["loggedIn"]) {
@@ -35,32 +37,29 @@
 		</header>
 
 		<div class="main">
-			<div class="center-panel">
-				<h2>Create Your Account!</h2>
-				<form action="complete-sign-up.php" method="POST">
-					<table>
-						<tr>
-							<td><label>Name</label></td>
-							<td><input type="text" name="name"></td>
-						</tr>
-						<tr>
-							<td><label>Email</label></td>
-							<td><input type="email" name="email"></td>
-						</tr>
-						<tr>
-							<td><label>Password</label></td>
-							<td><input type="password" name="password"></td>
-						</tr>
-						<tr>
-							<td><label>Confirm Password</label></td>
-							<td><input type="password" name="confirmPassword"></td>
-						</tr>
-						<tr>
-							<td colspan="2"><input type="submit" name=""></td>
-						</tr>
-					</table>
-				</form>
-			</div>
+			<?php 
+				$postID = $_GET["postID"];
+
+				$host = "localhost";
+				$database = "cosc360-project";
+				$user = "root";
+				$pwd = "";
+
+				$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+
+				$query = "SELECT * FROM Posts, Users WHERE Posts.userId = Users.userId AND Posts.postId = " . $postID . ";";
+				$result = $PDO->query($query);
+
+				$thread = $result->fetch();
+				
+				echo "<h2>" . $thread["title"] . "</h2>";
+				echo "<small><b>" . $thread["username"] . "</b> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small><hr>";
+				echo "<p>" . $thread["content"] . "</p>";
+
+				// Update post view count
+				$query = "UPDATE Posts SET views = views + 1 WHERE postId = " . $postID . ";";
+				$PDO->exec($query);
+			 ?>
 		</div>
 	</div>
 </body>

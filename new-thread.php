@@ -21,6 +21,7 @@
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
+						$_SESSION["userId"] = 1;
 					}
 
 					if ($_SESSION["loggedIn"]) {
@@ -35,32 +36,15 @@
 		</header>
 
 		<div class="main">
-			<div class="center-panel">
-				<h2>Create Your Account!</h2>
-				<form action="complete-sign-up.php" method="POST">
-					<table>
-						<tr>
-							<td><label>Name</label></td>
-							<td><input type="text" name="name"></td>
-						</tr>
-						<tr>
-							<td><label>Email</label></td>
-							<td><input type="email" name="email"></td>
-						</tr>
-						<tr>
-							<td><label>Password</label></td>
-							<td><input type="password" name="password"></td>
-						</tr>
-						<tr>
-							<td><label>Confirm Password</label></td>
-							<td><input type="password" name="confirmPassword"></td>
-						</tr>
-						<tr>
-							<td colspan="2"><input type="submit" name=""></td>
-						</tr>
-					</table>
-				</form>
-			</div>
+			<h2>Post a new thread!</h2>
+			<form id="thread-description" action="post-new-thread.php" method="POST">
+				<table>
+					<tr><td>Title</td><td><input type="text" name="title"></td></tr>
+					<tr><td>Content</td><td><textarea name="content" form="thread-description"></textarea></td></tr>
+					<tr><td>Allow anonymous comments?</td><td><input type="checkbox" name="anonymous-comment"></td></tr>
+					<tr><td></td><td><input type="submit"></td></tr>
+				</table>
+			</form>
 		</div>
 	</div>
 </body>
