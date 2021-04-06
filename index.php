@@ -22,19 +22,26 @@
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
-						$_SESSION["userId"] = 1;
+						$_SESSION["userId"] = null;
+						$_SESSION["firstName"] = null;
 					}
 
 					if ($_SESSION["loggedIn"]) {
-						echo "<a href=\"sign-in.php\" id=\"sign-in-button\">Sign In</a>";
+						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
 					}
 					else {
-						echo "<a href=\"sign-up.php\" id=\"sign-in-button\">Sign Up</a>";
+						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
 					}
 				 ?>
 			</nav>
 
 		</header>
+
+		<?php 
+			if ($_SESSION["loggedIn"]) {
+				echo "<h1>Hi again, " . $_SESSION["firstName"] . "!</h1>";
+			}
+		 ?>
 
 		<div class="main">
 			<div class="left-panel">

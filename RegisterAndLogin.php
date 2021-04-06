@@ -9,23 +9,31 @@
     </header>
     <body>
         <div class = "Registration_form" style = "width:50%; float:left">
-            <form>
+            <form method="POST" action="register-user.php">
                 <fieldset>
-                    <legend>Creat Account</legend>
+                    <legend>Create Account</legend>
+                    <p>
+                        <label>First name:</label>
+                        <input type = "text" id = "account_firstname" name = "account_firstname" placeholder = "Enter your first name" required/>
+                    </p>
+                    <p>
+                        <label>Last name:</label>
+                        <input type = "text" id = "account_lastname" name = "account_lastname" placeholder = "Enter your last name" required/>
+                    </p>
                     <p>
                         <label>Username:</label>
-                        <input type = "text" id = "account_name" name = "account_name" placeholder = "Enter your username" required/>
+                        <input type = "text" id = "account_name" name = "account_username" placeholder = "Enter your username" required/>
                     </p>
                     <p>
                         <label>Email address:</label>
                         <input type = "email" id = "account_email" name = "account_email" placeholder = "Enter your email address" required/>
                     </p>
                     <p>
-                        <label>Create passeord:</label>
+                        <label>Create password:</label>
                         <input type = "password" id = "account_password" name = "account_password" placeholder = "Enter your password" required/>
                     </p>
                     <p>
-                        <label>Confirm passeord:</label>
+                        <label>Confirm password:</label>
                         <input type = "password" id = "confirm_password" name = "confirm_password" placeholder = "Re-enter your password" required/>
                     </p>
                     <p>
@@ -39,15 +47,15 @@
             </form>
         </div>
         <div class = "Login_form" style = "width:50%; float:right">
-            <form>
+            <form method="POST" action="authenticate-user.php">
                 <fieldset>
                     <legend>Log-In</legend>
                     <p>
                         <label>Username:</label>
-                        <input type = "text" id = "account_name" name = "account_name" placeholder = "Enter your username" required/> 
+                        <input type = "text" id = "account_name" name = "account_username" placeholder = "Enter your username" required/> 
                     </p>
                     <p>
-                        <label>Passeord:</label>
+                        <label>Password:</label>
                         <input type = "password" id = "account_password" name = "account_password" placeholder = "Enter your password" required/>
                     </p>
                     <p>

@@ -21,10 +21,11 @@
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
-						$_SESSION["userId"] = 1;
+						$_SESSION["userId"] = null;
+						$_SESSION["firstName"] = null;
 					}
 
-					if (!$_SESSION["loggedIn"]) {
+					if ($_SESSION["loggedIn"]) {
 						$host = "localhost";
 						$database = "cosc360-project";
 						$user = "root";
@@ -60,7 +61,7 @@
 						*/
 					}
 					else {
-						echo "<a href=\"sign-up.php\" id=\"sign-in-button\">Sign Up</a>";
+						echo "<script type='text/javascript'>alert('Whoops, you need to be logged in to post a new thread! Please sign in or create your account for free now!'); window.location.href = 'RegisterAndLogin.php';</script>";
 					}
 				 ?>
 			</nav>
