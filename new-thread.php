@@ -22,13 +22,14 @@
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
 						$_SESSION["userId"] = 1;
+						$_SESSION["firstName"] = null;
 					}
 
 					if ($_SESSION["loggedIn"]) {
-						echo "<a href=\"sign-in.php\" id=\"sign-in-button\">Sign In</a>";
+						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
 					}
 					else {
-						echo "<a href=\"sign-up.php\" id=\"sign-in-button\">Sign Up</a>";
+						echo "<script type='text/javascript'>alert('Whoops, you need to be logged in to create a new thread! Please sign in or create your account for free now!'); window.location.href = 'RegisterAndLogin.php';</script>";
 					}
 				 ?>
 			</nav>

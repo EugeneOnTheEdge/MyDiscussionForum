@@ -21,6 +21,7 @@
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
+						$_SESSION["firstName"] = null;
 					}
 
 					if ($_SESSION["loggedIn"]) {
