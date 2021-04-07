@@ -54,6 +54,7 @@ nav a {
 	float: left;
 	width: 20em;
 	clear: left;
+	padding-left: 1em;
 }
 .left-panel h2 {
 	margin: 0em;

@@ -4,7 +4,9 @@ CREATE TABLE Users (
     lastName    VARCHAR(40),
     email       VARCHAR(50) NOT NULL,
     username    VARCHAR(50) NOT NULL,
-    password    VARCHAR(30),
+    password    VARCHAR(30) NOT NULL,
+    securityQuestion    VARCHAR(50),
+    securityAnswer      VARCHAR(50),
     PRIMARY KEY (userId)
 );
 
