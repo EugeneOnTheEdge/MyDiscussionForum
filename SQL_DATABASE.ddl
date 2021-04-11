@@ -4,7 +4,9 @@ CREATE TABLE Users (
     lastName    VARCHAR(40),
     email       VARCHAR(50) NOT NULL,
     username    VARCHAR(50) NOT NULL,
-    password    VARCHAR(30),
+    password    VARCHAR(30) NOT NULL,
+    securityQuestion    VARCHAR(50),
+    securityAnswer      VARCHAR(50),
     PRIMARY KEY (userId)
 );
 
@@ -32,9 +34,11 @@ CREATE TABLE Posts (
 
 CREATE TABLE Comments (
     commentId   INT AUTO_INCREMENT,
+    parentCommentId INT, -- parentCommentId refers to which commentId the comment is referring to --
     time        TIMESTAMP,
     postId      INT,
     userId      INT,
+    comment     VARCHAR(500),
     PRIMARY KEY (commentId),
     FOREIGN KEY (postId) REFERENCES Posts(postId) 
         ON UPDATE CASCADE ON DELETE CASCADE,

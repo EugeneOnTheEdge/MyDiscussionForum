@@ -40,6 +40,17 @@
                         <label>Profile Picture:</label>
                         <input type ="file" id = "profile_picture" name = "profile_picture" accept = "image/*" >
                     </p>
+                    <hr>
+                    <h3>Just in case you forget your password...</h3>
+                    <p>
+                        <label>Write your security question:</label>
+                        <input type="text" name="security-question" maxlength="50" required>
+                    </p>
+                    <p>
+                        <label>Answer to security question:</label>
+                        <input type="text" maxlength="50" name="security-answer" required>
+                    </p>
+                    <hr>
                     <p>
                         <input type = "submit" value = "Register"/>
                     </p>
@@ -60,7 +71,9 @@
                     </p>
                     <p>
                         <input type = "submit" value = "Log-in"/>
-                        <input type = "submit" value = "Forget password" />
+                    </p>
+                    <p>
+                        <a href="ResetPassword.php">Forgot your password?</a>
                     </p>
                 </fieldset>
             </form>

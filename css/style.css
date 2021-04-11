@@ -48,12 +48,16 @@ nav a {
 
 .main {
 	clear: both;
+	float: left;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
 .left-panel {
 	float: left;
 	width: 20em;
 	clear: left;
+	padding-left: 1em;
 }
 .left-panel h2 {
 	margin: 0em;
@@ -75,4 +79,28 @@ nav a {
 }
 .threads h4 {
 	margin: 0em;
+}
+
+.comments {
+	float: left;
+	width: 20em;
+	clear: left;
+	padding-left: 1em;
+}
+.comments textarea {
+	width: 100%;
+	margin-top: 1em;
+}
+.comment {
+	background-color: rgb(220,220,220);
+	border-radius: 1em;
+	padding: 1em;
+	display: block;
+	margin-top: 1em;
+}
+.comment textarea {
+	width: 100%;
+	margin-top: 1em;
+	background-color: rgb(220,220,220);
+	border: 0em;
 }
