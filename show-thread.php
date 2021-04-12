@@ -88,6 +88,86 @@
 			<div class="comments">
 				<h3>Comments</h3>
 				<?php 
+					function display_comment($comment, $result) {
+						if ($comment == null) {
+							return;
+						}
+						else {
+							echo "<div class='comment'>";
+							echo "<p>" . $comment["comment"] . "</p>";
+							echo "<hr>";
+
+							echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
+
+							// -- Count total of upvotes and downvotes for each comment 
+							$query_totalUpvotes = "SELECT Count(Upvotes.upvoteId) AS NUMBER_OF_UPVOTES FROM Upvotes WHERE commentId = " . $comment["commentId"] . ";";
+
+							$upvote_result = $GLOBALS["PDO"] -> query($query_totalUpvotes);
+							$upvote_counts = $upvote_result -> fetch();
+							$upvote_counts = $upvote_counts["NUMBER_OF_UPVOTES"];
+
+							$query_totalDownvotes = "SELECT Count(Downvotes.downvoteId) AS NUMBER_OF_DOWNVOTES FROM Downvotes WHERE commentId = " . $comment["commentId"] . ";";
+							$downvote_result = $GLOBALS["PDO"] -> query($query_totalDownvotes);
+							$downvote_counts = $downvote_result -> fetch();
+							$downvote_counts = $downvote_counts["NUMBER_OF_DOWNVOTES"];
+							// ---
+
+							if ($GLOBALS["userID"] != null) {
+								// -- Check if user has upvoted the comment
+								$query_upvoted = "SELECT Count(Upvotes.upvoteId) AS UPVOTED FROM Upvotes WHERE commentId = " . $comment["commentId"] . " AND userId = " . $GLOBALS["userID"] . ";";
+
+								$upvoted_result = $GLOBALS["PDO"] -> query($query_upvoted);
+								$upvoted_result = $upvoted_result -> fetch();
+								$upvoted = $upvoted_result["UPVOTED"];
+
+								$query_downvoted = "SELECT Count(Downvotes.downvoteId) AS DOWNVOTED FROM Downvotes WHERE commentId = " . $comment["commentId"] . " AND userId = " . $GLOBALS["userID"] . ";";
+
+								$downvoted_result = $GLOBALS["PDO"] -> query($query_downvoted);
+								$downvoted_result = $downvoted_result -> fetch();
+								$downvoted = $downvoted_result["DOWNVOTED"];
+								// ---
+
+								if (boolval($upvoted)) {
+									echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='upvote-button upvoted'><b>Upvote (" . $upvote_counts . ")</b></button></a>";
+									echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
+								}
+								else if (boolval($downvoted)) {
+									echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
+									echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='downvote-button downvoted'><b>Downvote (" . $downvote_counts . ")</b></button></a>";
+								}
+								else {
+									echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
+									echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
+								}
+							}
+							else {
+								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
+								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
+							}
+
+							echo "<div class='reply-comment-section'>";
+							echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button></div>";
+							echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";
+							echo "<span style='display:none;'><input type='text' name='postID' value='" . $GLOBALS["postID"] . "'></span>";
+							echo "<span style='display:none;'><input type='text' name='parentCommentID' value='" . $comment["commentId"] . "'></span>";
+							echo "<textarea cols='50' rows='10' minlength='1' name='comment-content' maxlength='500' placeholder='Reply to @" . $comment["username"] . "'></textarea><br>";
+							echo "<input type='Submit' value='Post'>";
+							echo "</form>";
+
+							$query_allRepliesToTheSameComment = "SELECT * FROM Comments, Users WHERE parentCommentID = " . $comment["commentId"] . " AND Comments.userId = Users.userId;";
+							$results = $GLOBALS["PDO"] -> query($query_allRepliesToTheSameComment);
+
+							$replyToTheSameComment = $results -> fetch();
+
+							while ($replyToTheSameComment != null) {
+								display_comment($replyToTheSameComment, $results);
+
+								$replyToTheSameComment = $results -> fetch();
+							}
+							echo "</div>";
+						}
+					}
+
 					$query = "SELECT *, Comments.commentId, COUNT(Upvotes.upvoteId) AS UpvoteCount, COUNT(Downvotes.downvoteId) AS DownvoteCount 
 						FROM Comments JOIN Posts JOIN Users 
 							LEFT JOIN Upvotes ON Upvotes.commentId = Comments.commentId
@@ -97,58 +177,15 @@
 						    AND Comments.userId = Users.userId 
 						GROUP BY Comments.commentId;";
 
-					$query = "SELECT * FROM Comments, Posts, Users WHERE Posts.postId = " . $postID . " AND Comments.postId = " . $postID . " AND Comments.userId = Users.userId; AND Posts.userId = Users.userId";
+					$query = "SELECT * FROM Comments, Posts, Users WHERE Posts.postId = " . $postID . " AND Comments.postId = " . $postID . " AND Comments.userId = Users.userId AND Comments.parentCommentId = 0;";
 
 					$result = $PDO->query($query);
 
 					$comment = $result -> fetch();
 
 					while ($comment != null) {
-						echo "<div class='comment'>";
-						echo "<p>" . $comment["comment"] . "</p>";
-						echo "<hr>";
-
-						echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
-
-						if ($userID != null) {
-							$query_user_has_upvoted = "SELECT Count(Upvotes.upvoteId) AS NUMBER_OF_UPVOTES FROM Upvotes WHERE commentId = " . $comment["commentId"] . " AND userId = " . $userID . ";";
-
-							$upvote_result = $PDO -> query($query_user_has_upvoted);
-							$upvote_counts = $upvote_result -> fetch();
-							$upvote_counts = $upvote_counts["NUMBER_OF_UPVOTES"];
-
-							$query_user_has_downvoted = "SELECT Count(Downvotes.downvoteId) AS NUMBER_OF_DOWNVOTES FROM Downvotes WHERE commentId = " . $comment["commentId"] . " AND userId = " . $userID . ";";
-							$downvote_result = $PDO -> query($query_user_has_downvoted);
-							$downvote_counts = $downvote_result -> fetch();
-							$downvote_counts = $downvote_counts["NUMBER_OF_DOWNVOTES"];
-
-							if ($upvote_counts > 0) {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button upvoted'><b>Upvote (" . $upvote_counts . ")</b></button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
-							}
-							else if ($downvote_counts > 0) {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button downvoted'><b>Downvote (" . $downvote_counts . ")</b></button></a>";
-							}
-							else {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
-							}
-						}
-						else {
-							echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $comment["UpvoteCount"] . ")</button></a>";
-							echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $comment["DownvoteCount"] . ")</button></a>";
-						}
-
-						echo "<div class='reply-comment-section'>";
-						echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button></div>";
-						echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";
-						echo "<span style='display:none;'><input type='text' name='postID' value='" . $postID . "'></span>";
-						echo "<span style='display:none;'><input type='text' name='parentCommentID' value='" . $comment["commentId"] . "'></span>";
-						echo "<textarea cols='50' rows='10' minlength='1' name='comment-content' maxlength='500' placeholder='Reply to @" . $comment["username"] . "'></textarea><br>";
-						echo "<input type='Submit' value='Post'>";
-						echo "</form>";
-						echo "</div>";
+						
+						display_comment($comment, $result);
 
 						$comment = $result -> fetch();
 					}

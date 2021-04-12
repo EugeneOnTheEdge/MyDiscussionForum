@@ -73,8 +73,6 @@
 							$query = "DELETE FROM Upvotes WHERE commentId = $commentID AND userId = $userID;";
 							$PDO -> exec($query);
 						}
-
-						echo "<script type='text/javascript'>alert('Your vote has been recorded!');</script>";
 						echo "<script type='text/javascript'>window.location.href = 'show-thread.php?postID=" . $postID . "';</script>";
 					}
 				 ?>

@@ -86,6 +86,7 @@ nav a {
 	width: 20em;
 	clear: left;
 	padding-left: 1em;
+	margin-bottom: 1em;
 }
 .comments textarea {
 	width: 100%;
