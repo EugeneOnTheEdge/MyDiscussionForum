@@ -88,8 +88,6 @@
 			<div class="comments">
 				<h3>Comments</h3>
 				<?php 
-
-<<<<<<< HEAD
 					$query = "SELECT *, Comments.commentId, COUNT(Upvotes.upvoteId) AS UpvoteCount, COUNT(Downvotes.downvoteId) AS DownvoteCount 
 						FROM Comments JOIN Posts JOIN Users 
 							LEFT JOIN Upvotes ON Upvotes.commentId = Comments.commentId
@@ -98,9 +96,9 @@
 							AND Comments.postId = $postID
 						    AND Comments.userId = Users.userId 
 						GROUP BY Comments.commentId;";
-=======
+
 					$query = "SELECT * FROM Comments, Posts, Users WHERE Posts.postId = " . $postID . " AND Comments.postId = " . $postID . " AND Comments.userId = Users.userId; AND Posts.userId = Users.userId";
->>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
+
 					$result = $PDO->query($query);
 
 					$comment = $result -> fetch();
@@ -109,7 +107,7 @@
 						echo "<div class='comment'>";
 						echo "<p>" . $comment["comment"] . "</p>";
 						echo "<hr>";
-<<<<<<< HEAD
+
 						echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
 
 						if ($userID != null) {
@@ -125,28 +123,23 @@
 							$downvote_counts = $downvote_counts["NUMBER_OF_DOWNVOTES"];
 
 							if ($upvote_counts > 0) {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button upvoted'><b>Upvote (" . $comment["UpvoteCount"] . ")</b></button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $comment["DownvoteCount"] . ")</button></a>";
+								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button upvoted'><b>Upvote (" . $upvote_counts . ")</b></button></a>";
+								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
 							}
 							else if ($downvote_counts > 0) {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $comment["UpvoteCount"] . ")</button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button downvoted'><b>Downvote (" . $comment["DownvoteCount"] . ")</b></button></a>";
+								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
+								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button downvoted'><b>Downvote (" . $downvote_counts . ")</b></button></a>";
 							}
 							else {
-								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $comment["UpvoteCount"] . ")</button></a>";
-								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $comment["DownvoteCount"] . ")</button></a>";
+								echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $upvote_counts . ")</button></a>";
+								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
 							}
 						}
 						else {
 							echo "<a href='vote.php?vote=1&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='upvote-button'>Upvote (" . $comment["UpvoteCount"] . ")</button></a>";
 							echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $postID . "'><button class='downvote-button'>Downvote (" . $comment["DownvoteCount"] . ")</button></a>";
 						}
-						
-			
-=======
-						echo "<small>" . $comment["username"] . " / " . $comment["time"] . "</small>";
 
->>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
 						echo "<div class='reply-comment-section'>";
 						echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button></div>";
 						echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";

@@ -35,11 +35,8 @@ CREATE TABLE Posts (
 CREATE TABLE Comments (
     commentId   INT AUTO_INCREMENT,
     parentCommentId INT, -- parentCommentId refers to which commentId the comment is referring to --
-<<<<<<< HEAD
     commentTime        TIMESTAMP,
-=======
     time        TIMESTAMP,
->>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
     postId      INT,
     userId      INT,
     comment     VARCHAR(500),
