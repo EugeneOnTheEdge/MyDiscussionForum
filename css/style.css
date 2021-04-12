@@ -48,12 +48,16 @@ nav a {
 
 .main {
 	clear: both;
+	float: left;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
 .left-panel {
 	float: left;
 	width: 20em;
 	clear: left;
+	padding-left: 1em;
 }
 .left-panel h2 {
 	margin: 0em;
@@ -75,4 +79,59 @@ nav a {
 }
 .threads h4 {
 	margin: 0em;
+}
+
+.comments {
+	float: left;
+	width: 20em;
+	clear: left;
+	padding-left: 1em;
+}
+.comments textarea {
+	width: 100%;
+	margin-top: 1em;
+}
+.comment {
+	background-color: rgb(220,220,220);
+	border-radius: 1em;
+	padding: 1em;
+	display: block;
+	margin-top: 1em;
+}
+.comment textarea {
+	width: 100%;
+	margin-top: 1em;
+	background-color: rgb(220,220,220);
+	border: 0em;
+}
+
+.upvote-button {
+	background-color: #d7ffd9;
+	color: #003300;
+	border: none;
+	padding: 0.5em;
+	border-radius: 10px;
+}
+.upvote-button:hover {
+	background-color: #003300;
+	color: #d7ffd9;
+}
+.upvoted {
+	border: 0.25em solid #003300;
+}
+.downvote-button {
+	background-color: #ff9281;
+	color: #a90009;
+	border: none;
+	padding: 0.5em;
+	margin-left: 1em;
+	border-radius: 10px;
+}
+.downvote-button:hover {
+	background-color: #a90009;
+	color: #ff9281;
+	margin-left: 1em;
+}
+.downvoted {
+	border: 0.25em solid #a90009;
 }

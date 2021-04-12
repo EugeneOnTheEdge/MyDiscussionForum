@@ -4,7 +4,9 @@ CREATE TABLE Users (
     lastName    VARCHAR(40),
     email       VARCHAR(50) NOT NULL,
     username    VARCHAR(50) NOT NULL,
-    password    VARCHAR(30),
+    password    VARCHAR(30) NOT NULL,
+    securityQuestion    VARCHAR(50),
+    securityAnswer      VARCHAR(50),
     PRIMARY KEY (userId)
 );
 
@@ -32,9 +34,11 @@ CREATE TABLE Posts (
 
 CREATE TABLE Comments (
     commentId   INT AUTO_INCREMENT,
-    time        TIMESTAMP,
+    parentCommentId INT, -- parentCommentId refers to which commentId the comment is referring to --
+    commentTime        TIMESTAMP,
     postId      INT,
     userId      INT,
+    comment     VARCHAR(500),
     PRIMARY KEY (commentId),
     FOREIGN KEY (postId) REFERENCES Posts(postId) 
         ON UPDATE CASCADE ON DELETE CASCADE,
@@ -42,6 +46,29 @@ CREATE TABLE Comments (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE Upvotes (
+    upvoteId    INT AUTO_INCREMENT,
+    commentId   INT,
+    userId      INT,
+
+    PRIMARY KEY (upvoteId),
+    FOREIGN KEY (commentId) REFERENCES Comments(commentId)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES Users(userId)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Downvotes (
+    downvoteId    INT AUTO_INCREMENT,
+    commentId   INT,
+    userId      INT,
+
+    PRIMARY KEY (downvoteId),
+    FOREIGN KEY (commentId) REFERENCES Comments(commentId)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES Users(userId)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 INSERT INTO Users(firstName, lastName, email, username, password) VALUES ('King','Thompson','KinThompson@gmail.com','KinThompson','ThompsonKing');
 INSERT INTO Users(firstName, lastName, email, username, password) VALUES ('Anderson','Aria','AndAria@gmail.com','AndAria','AriaAnderson');

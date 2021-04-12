@@ -25,6 +25,8 @@
 					$password = $_POST["account_password"];
 					$confirmPassword = $_POST["confirm_password"];
 					$profilePicture = $_POST["profile_picture"];
+					$securityQuestion = $_POST["security-question"];
+					$securityAnswer = $_POST["security-answer"];
 
 					if (!$_SESSION["loggedIn"]) {
 						if ($confirmPassword != $password) {
@@ -47,7 +49,7 @@
 								echo "<script type='text/javascript'>alert('Whoops, couldn\'t create your account. Another user already has the same username and/or email :('); window.location.href = 'RegisterAndLogin.php';</script>";
 							}
 							else { // No other users with the same username/email
-								$query2 = "INSERT INTO Users (firstName,lastName,email,username,password) VALUES ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $username . "','" . $password . "');";
+								$query2 = "INSERT INTO Users (firstName,lastName,email,username,password,securityQuestion,securityAnswer) VALUES ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $username . "','" . $password . "','" . $securityQuestion . "','" . $securityAnswer . "');";
 								$PDO->exec($query2);
 								echo "<script type='text/javascript'>alert('Great! Your account has been created. You may now sign in with your account :)'); window.location.href = 'RegisterAndLogin.php';</script>";
 							}
