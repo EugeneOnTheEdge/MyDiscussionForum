@@ -89,6 +89,7 @@
 				<h3>Comments</h3>
 				<?php 
 
+<<<<<<< HEAD
 					$query = "SELECT *, Comments.commentId, COUNT(Upvotes.upvoteId) AS UpvoteCount, COUNT(Downvotes.downvoteId) AS DownvoteCount 
 						FROM Comments JOIN Posts JOIN Users 
 							LEFT JOIN Upvotes ON Upvotes.commentId = Comments.commentId
@@ -97,6 +98,9 @@
 							AND Comments.postId = $postID
 						    AND Comments.userId = Users.userId 
 						GROUP BY Comments.commentId;";
+=======
+					$query = "SELECT * FROM Comments, Posts, Users WHERE Posts.postId = " . $postID . " AND Comments.postId = " . $postID . " AND Comments.userId = Users.userId; AND Posts.userId = Users.userId";
+>>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
 					$result = $PDO->query($query);
 
 					$comment = $result -> fetch();
@@ -105,6 +109,7 @@
 						echo "<div class='comment'>";
 						echo "<p>" . $comment["comment"] . "</p>";
 						echo "<hr>";
+<<<<<<< HEAD
 						echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
 
 						if ($userID != null) {
@@ -138,6 +143,10 @@
 						}
 						
 			
+=======
+						echo "<small>" . $comment["username"] . " / " . $comment["time"] . "</small>";
+
+>>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
 						echo "<div class='reply-comment-section'>";
 						echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button></div>";
 						echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";

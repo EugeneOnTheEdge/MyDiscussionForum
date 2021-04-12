@@ -37,7 +37,11 @@
 						$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
 						// Check if user account with the same email address / username already exists
+<<<<<<< HEAD
 						$query1 = "INSERT INTO Comments (parentCommentId,commentTime,postId,userId,comment) VALUES (" . $parentCommentID . ",CURRENT_TIMESTAMP," . $postID . "," . $userID . ",'" . $commentContent . "');";
+=======
+						$query1 = "INSERT INTO Comments (parentCommentId,time,postId,userId,comment) VALUES (" . $parentCommentID . ",CURRENT_TIMESTAMP," . $postID . "," . $userID . ",'" . $commentContent . "');";
+>>>>>>> 3eb9c8b5599497216fa257abab1862da073c5a02
 						$result1 = $PDO->exec($query1);
 
 						echo "<script type='text/javascript'>alert('Your comment has been posted!');</script>";
