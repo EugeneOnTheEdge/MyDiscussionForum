@@ -22,7 +22,7 @@
 					$_SESSION["username"] = null;
 					$_SESSION["userId"] = null;
 					$_SESSION["firstName"] = null;
-				
+					$_SESSION["admin"] = false;
 				
 					echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
 				 ?>

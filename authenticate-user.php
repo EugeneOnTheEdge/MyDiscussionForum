@@ -29,7 +29,7 @@
 
 						$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
-						$query1 = "SELECT userId, firstName, username, password FROM Users WHERE username = '" . $username . "' AND password = '" . $password . "';";
+						$query1 = "SELECT * FROM Users WHERE username = '" . $username . "' AND password = '" . $password . "';";
 						$result1 = $PDO->query($query1);
 
 						$row = $result1->fetch();
@@ -38,6 +38,7 @@
 							$_SESSION["username"] = $row["username"];
 							$_SESSION["userId"] = $row["userId"];
 							$_SESSION["firstName"] = $row["firstName"];
+							$_SESSION["admin"] = boolval($row["admin"]);
 
 							echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
 						}

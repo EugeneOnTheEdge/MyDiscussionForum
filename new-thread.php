@@ -21,15 +21,20 @@
 					if (sizeof($_SESSION) == 0) {
 						$_SESSION["loggedIn"] = false;
 						$_SESSION["username"] = null;
-						$_SESSION["userId"] = 1;
+						$_SESSION["userId"] = null;
 						$_SESSION["firstName"] = null;
+						$_SESSION["admin"] = false;
+					}
+
+					if ($_SESSION["admin"]) {
+						echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
 					}
 
 					if ($_SESSION["loggedIn"]) {
 						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
 					}
 					else {
-						echo "<script type='text/javascript'>alert('Whoops, you need to be logged in to create a new thread! Please sign in or create your account for free now!'); window.location.href = 'RegisterAndLogin.php';</script>";
+						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
 					}
 				 ?>
 			</nav>

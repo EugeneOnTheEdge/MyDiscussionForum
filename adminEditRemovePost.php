@@ -10,6 +10,26 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <?php 
+      session_start();
+
+      if ($_SESSION["loggedIn"]) {
+        if (boolval($_SESSION["admin"])) {
+          $host = "localhost";
+          $database = "cosc360-project";
+          $user = "root";
+          $pwd = "";
+
+          $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+        }
+        else {
+          echo "<script type='text/javascript'>alert('Hey! You\'re unauthorized to view this page. Only users with admin access can view the Admin Dashboard!'); window.location.href = 'index.php';</script>";
+        }
+      }
+      else {
+        echo "<script type='text/javascript'>alert('Please log in to view the Admin Dashboard!'); window.location.href = 'RegisterAndLogin.php';</script>";
+      }
+   ?>
 </head>
 <style>
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -40,8 +60,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="adminDashboard.php">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">Search Users</a></li>
-        <li><a href="adminEnableDisableUser.php">Enable / Disable Users</a></li>
+        <li><a href="adminSearchUser.php">User Account Management</a></li>
         <li class="active"><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul>
     </div>
@@ -51,11 +70,10 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
+      <h2>MyDiscussionForum</h2>
       <ul class="nav nav-pills nav-stacked">
-      <li><a href="adminDashboard.php">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">Search Users</a></li>
-        <li><a href="adminEnableDisableUser.php">Enable / Disable Users</a></li>
+        <li><a href="adminDashboard.php">Dashboard</a></li>
+        <li><a href="adminSearchUser.php">User Account Management</a></li>
         <li class="active"><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul><br>
     </div>
