@@ -24,6 +24,11 @@
 						$_SESSION["username"] = null;
 						$_SESSION["userId"] = null;
 						$_SESSION["firstName"] = null;
+						$_SESSION["admin"] = false;
+					}
+
+					if ($_SESSION["admin"]) {
+						echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
 					}
 
 					if ($_SESSION["loggedIn"]) {

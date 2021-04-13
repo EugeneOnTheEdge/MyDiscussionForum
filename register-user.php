@@ -49,7 +49,7 @@
 								echo "<script type='text/javascript'>alert('Whoops, couldn\'t create your account. Another user already has the same username and/or email :('); window.location.href = 'RegisterAndLogin.php';</script>";
 							}
 							else { // No other users with the same username/email
-								$query2 = "INSERT INTO Users (firstName,lastName,email,username,password,securityQuestion,securityAnswer) VALUES ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $username . "','" . $password . "','" . $securityQuestion . "','" . $securityAnswer . "');";
+								$query2 = "INSERT INTO Users (firstName,lastName,email,username,password,securityQuestion,securityAnswer,admin,accountStatus) VALUES ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $username . "','" . $password . "','" . $securityQuestion . "','" . $securityAnswer . "',0,'ACTIVE');";
 								$PDO->exec($query2);
 								echo "<script type='text/javascript'>alert('Great! Your account has been created. You may now sign in with your account :)'); window.location.href = 'RegisterAndLogin.php';</script>";
 							}

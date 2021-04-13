@@ -10,6 +10,27 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <?php 
+      session_start();
+
+      if ($_SESSION["loggedIn"]) {
+        if (boolval($_SESSION["admin"])) {
+          $host = "localhost";
+          $database = "cosc360-project";
+          $user = "root";
+          $pwd = "";
+
+          $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+        }
+        else {
+          echo "<script type='text/javascript'>alert('Hey! You\'re unauthorized to view this page. Only users with admin access can view the Admin Dashboard!'); window.location.href = 'index.php';</script>";
+        }
+      }
+      else {
+        echo "<script type='text/javascript'>alert('Please log in to view the Admin Dashboard!'); window.location.href = 'RegisterAndLogin.php';</script>";
+      }
+   ?>
 </head>
 <style>
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -40,8 +61,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">Search Users</a></li>
-        <li><a href="adminEnableDisableUser.php">Enable / Disable Users</a></li>
+        <li><a href="adminSearchUser.php">User Account Management/a></li>
         <li><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul>
     </div>
@@ -51,11 +71,10 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
+      <h2>MyDiscussionForum</h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">Search Users</a></li>
-        <li><a href="adminEnableDisableUser.php">Enable / Disable Users</a></li>
+        <li><a href="adminSearchUser.php">User Account Management</a></li>
         <li><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul><br>
     </div>
@@ -68,43 +87,64 @@
         <div class="col-sm-3">
           <div class="well">
             <h4>Registered Users</h4>
-            <p>1 Million</p> 
+            <p>
+              <?php 
+                  $query_registeredUsers =  "SELECT COUNT(Users.userId) AS REGISTERED_USERS FROM Users;";
+                  $results = $PDO -> query($query_registeredUsers);
+
+                  echo $results -> fetch()["REGISTERED_USERS"];
+               ?>
+            </p> 
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
             <h4>Posts</h4>
-            <p>100 Million</p> 
+            <p>
+              <?php 
+                  $query_posts =  "SELECT COUNT(Posts.postId) AS POSTS FROM Posts;";
+                  $results = $PDO -> query($query_posts);
+
+                  echo $results -> fetch()["POSTS"];
+               ?>
+            </p> 
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4>Visits per Day</h4>
-            <p>10 Million</p> 
+            <h4>Total Thread Views</h4>
+            <p>
+              <?php 
+                  $query_totalThreadViews =  "SELECT SUM(Posts.views) AS TOTAL_THREAD_VIEWS FROM Posts;";
+                  $results = $PDO -> query($query_totalThreadViews);
+
+                  $TOTAL_THREAD_VIEWS = $results -> fetch()["TOTAL_THREAD_VIEWS"];
+
+                  if ($TOTAL_THREAD_VIEWS != null)
+                    echo $TOTAL_THREAD_VIEWS;
+                  else
+                    echo "0";
+               ?>
+            </p> 
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4>Posts per Day</h4>
-            <p>10,000 posts</p> 
+            <h4>Total Thread Comments</h4>
+            <p>
+              <?php 
+                  $query_totalThreadComments =  "SELECT SUM(Comments.commentId) AS TOTAL_THREAD_COMMENTS FROM Comments;";
+                  $results = $PDO -> query($query_totalThreadComments);
+
+                  $TOTAL_THREAD_COMMENTS = $results -> fetch()["TOTAL_THREAD_COMMENTS"];
+
+                  if ($TOTAL_THREAD_COMMENTS != null)
+                    echo $TOTAL_THREAD_COMMENTS;
+                  else
+                    echo "0";
+               ?>
+            </p> 
           </div>
         </div>
-        <div class="col-sm-8">
-          <h3>Recent Activities</h3>
-      </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Recent Post</h4>
-              <p>1 Million</p> 
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="well">
-              <h4>Recent Comments</h4>
-              <p>100 Million</p> 
-            </div>
-          </div>
-      
 </body>
 </html>
