@@ -10,6 +10,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    table {
+      display: block;
+      margin-bottom: 1em;
+    }
+    td, th {
+      padding-left: 1em;
+    }
+
+  </style>
   <?php 
       session_start();
 
@@ -88,53 +98,55 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-8">
           <div class="well">
-            <h4>Start by searching for users</h4>
-            <hr>
-            <form method="POST" action="adminSearchUser_results.php">
-               <table>
-                 <tr>
-                   <td><label>Username</label></td>
-                   <td><input type="text" name="username" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Email</label></td>
-                   <td><input type="text" name="email" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>First Name</label></td>
-                   <td><input type="text" name="firstName" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                    <td><label>Last Name</label></td>
-                    <td><input type="text" name="lastName" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Account Status</label></td>
-                   <td>
-                     <select name="accountStatus">
-                       <option value="">ALL</option>
-                       <option value="ACTIVE">ACTIVE</option>
-                       <option value="DISABLED">DISABLED</option>
-                     </select>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td><label>Admin</label></td>
-                   <td>
-                     <select name="admin">
-                       <option value="">ALL</option>
-                       <option value="1">ADMIN</option>
-                       <option value="0">NON-ADMIN</option>
-                     </select>
-                   </td>
-                 </tr>
-                 <tr colspan="2">
-                  <td><input type="submit" value="Search"></td>
-                 </tr>
-               </table>
-             </form>
+            <h4>Search Results</h4>
+            <small>
+              <?php 
+                $userID = $_GET["userID"];
+              
+                  echo "Edit user information";
+               ?>
+            </small><hr>
+            
+           <table>
+            <tr>
+              <th>User ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Account Status</th>
+              <th>Admin</th>
+            </tr>
+              
+            <?php 
+              $query = "SELECT * FROM Users WHERE userId = $userID;";
+              $results = $PDO -> query($query);
+
+              $user = $results -> fetch();
+              
+              echo "<form id='form-user' method='POST' action='admin_editUser.php'>";
+              echo "<tr><td><input name='userID' type='text' readonly value='" .  $user["userId"] . "' style='background-color:rgb(230,230,230);'></td>";
+              echo "<td>" . "<input name='username' value='" . $user["username"] . "'></td>";
+              echo "<td>" . "<input name='email' value='" . $user["email"] . "'></td>";
+              echo "<td>" . "<input name='firstName' value='" . $user["firstName"] . "'></td>";
+              echo "<td>" . "<input name='lastName' value='" . $user["lastName"] . "'></td>";
+              
+              if ($user["accountStatus"] == "ACTIVE")
+                echo "<td><select name='accountStatus'><option value='ACTIVE'>ACTIVE</option><option value='DISABLED'>DISABLE</option></select></td>";
+              else
+                echo "<td><select name='accountStatus'><option value='DISABLE'>DISABLED</option><option value='ACTIVE'>ACTIVATE</option></select></td>";
+
+              if (boolval($user["admin"]))
+                echo "<td><select name='admin'><option value='1'>YES</option><option value='0'>REMOVE ADMIN PRIVILEGES</option></select></td>";
+              else
+                echo "<td><select name='admin'><option value='0'>NO</option><option value='1'>GRANT ADMIN PRIVILEGES</option></select></td>";
+              echo "</tr></form>";
+             ?>            
+           </table>
+           <button onclick='document.getElementById("form-user").submit();'><b>Save</b></button>
+           <a href="adminSearchUser.php"><button>Back to Search</button></a>
           </div>
         </div>
       </div>
