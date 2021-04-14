@@ -15,28 +15,7 @@
 			<nav>
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
-				<?php 
-					session_start();
-
-					if (sizeof($_SESSION) == 0) {
-						$_SESSION["loggedIn"] = false;
-						$_SESSION["username"] = null;
-						$_SESSION["userId"] = null;
-						$_SESSION["firstName"] = null;
-						$_SESSION["admin"] = false;
-					}
-
-					if ($_SESSION["admin"]) {
-						echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
-					}
-
-					if ($_SESSION["loggedIn"]) {
-						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
-					}
-					else {
-						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
-					}
-				 ?>
+				<?php require 'enforce-user-status.php' ?>
 			</nav>
 
 		</header>

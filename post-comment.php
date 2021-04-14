@@ -15,9 +15,9 @@
 			<nav>
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
+				<?php require 'enforce-user-status.php' ?>
+				
 				<?php 
-					session_start();
-
 					$userID = $_SESSION["userId"];
 					$username = $_SESSION["username"];
 

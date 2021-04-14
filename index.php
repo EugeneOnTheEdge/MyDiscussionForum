@@ -17,43 +17,7 @@
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
 				<a href="new-thread.php">+ New Thread</a>
-				<?php 
-					session_start();
-
-					if (sizeof($_SESSION) == 0) {
-						$_SESSION["loggedIn"] = false;
-						$_SESSION["username"] = null;
-						$_SESSION["userId"] = null;
-						$_SESSION["firstName"] = null;
-					}
-
-					if ($_SESSION["loggedIn"]) {
-						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
-					}
-					else {
-						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
-					}
-				 ?>
-
-				 <?php 
-				      if ($_SESSION["loggedIn"]) {
-				        $host = "localhost";
-				        $database = "cosc360-project";
-				        $user = "root";
-				        $pwd = "";
-
-				        $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
-
-				        $query = "SELECT admin FROM Users WHERE Users.userId = " . $_SESSION["userId"] . ";";
-				        $result = $PDO -> query($query);
-				        $admin = boolval($result -> fetch()["admin"]);
-
-				        $_SESSION["admin"] = $admin;
-
-				        if ($admin) 
-				          echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
-				      }
-			 	  ?>
+				<?php require 'enforce-user-status.php' ?>
 			</nav>
 
 		</header>

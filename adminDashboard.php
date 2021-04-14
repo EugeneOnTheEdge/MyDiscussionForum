@@ -137,7 +137,7 @@
             <h4>Total Thread Comments</h4>
             <p>
               <?php 
-                  $query_totalThreadComments =  "SELECT SUM(Comments.commentId) AS TOTAL_THREAD_COMMENTS FROM Comments;";
+                  $query_totalThreadComments =  "SELECT COUNT(Comments.commentId) AS TOTAL_THREAD_COMMENTS FROM Comments;";
                   $results = $PDO -> query($query_totalThreadComments);
 
                   $TOTAL_THREAD_COMMENTS = $results -> fetch()["TOTAL_THREAD_COMMENTS"];

@@ -28,28 +28,8 @@
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
 				<a href="new-thread.php">+ New Thread</a>
-				<?php 
-					session_start();
 
-					if (sizeof($_SESSION) == 0) {
-						$_SESSION["loggedIn"] = false;
-						$_SESSION["username"] = null;
-						$_SESSION["userId"] = null;
-						$_SESSION["firstName"] = null;
-						$_SESSION["admin"] = false;
-					}
-
-					if ($_SESSION["admin"]) {
-						echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
-					}
-
-					if ($_SESSION["loggedIn"]) {
-						echo "<a href=\"sign-out.php\" id=\"sign-in-button\">Sign Out</a>";
-					}
-					else {
-						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
-					}
-				 ?>
+				<?php require 'enforce-user-status.php' ?>
 			</nav>
 
 		</header>
@@ -69,11 +49,13 @@
 				$query = "SELECT * FROM Posts, Users WHERE Posts.userId = Users.userId AND Posts.postId = " . $postID . ";";
 				$result = $PDO->query($query);
 
-				$thread = $result->fetch();
-				
+				$thread = $result->fetch();				
 				echo "<h2>" . $thread["title"] . "</h2>";
 				echo "<p>" . $thread["content"] . "</p>";
-				echo "<small><b>" . $thread["username"] . "</b> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+				if (boolval($thread["admin"]))
+					echo "<small><b class='moderator-badge'>" . $thread["username"] . " (mod)</b> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+				else
+					echo "<small><b>" . $thread["username"] . "</b> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
 				echo "<div class='reply-comment-section'>";
 				echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-0\")'>Reply</button></div>";
 				echo "<form style='display:none' id='reply-comment-form-0' method='POST' action='post-comment.php'>";
@@ -99,10 +81,18 @@
 						}
 						else {
 							echo "<div class='comment'>";
-							echo "<p>" . $comment["comment"] . "</p>";
+							if ($comment["commentDeleted"] == "USER") 
+								echo "<small>**Comment has been deleted by user**</small>";
+							else if ($comment["commentDeleted"] == "ADMIN")
+								echo "<small>**Comment has been deleted by moderator**</small>";
+							else
+								echo "<p>" . $comment["comment"] . "</p>";
 							echo "<hr>";
 
-							echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
+							if (boolval($comment["admin"]))
+								echo "<small><span class='moderator-badge'>" . $comment["username"] . " (mod)</span> / " . $comment["commentTime"] . "</small><br>";
+							else
+								echo "<small>" . $comment["username"] . " / " . $comment["commentTime"] . "</small><br>";
 
 							// -- Count total of upvotes and downvotes for each comment 
 							$query_totalUpvotes = "SELECT Count(Upvotes.upvoteId) AS NUMBER_OF_UPVOTES FROM Upvotes WHERE commentId = " . $comment["commentId"] . ";";
@@ -150,14 +140,21 @@
 								echo "<a href='vote.php?vote=0&commentID=" . $comment["commentId"] . "&postID=" . $GLOBALS["postID"] . "'><button class='downvote-button'>Downvote (" . $downvote_counts . ")</button></a>";
 							}
 
-							echo "<div class='reply-comment-section'>";
-							echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button></div>";
-							echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";
-							echo "<span style='display:none;'><input type='text' name='postID' value='" . $GLOBALS["postID"] . "'></span>";
-							echo "<span style='display:none;'><input type='text' name='parentCommentID' value='" . $comment["commentId"] . "'></span>";
-							echo "<textarea cols='50' rows='10' minlength='1' name='comment-content' maxlength='500' placeholder='Reply to @" . $comment["username"] . "'></textarea><br>";
-							echo "<input type='Submit' value='Post'>";
-							echo "</form>";
+							if (strlen($comment["commentDeleted"]) == 0) {
+								echo "<div class='reply-comment-section'>";
+								echo "<button type='button' onclick='toggleElement(this, \"#reply-comment-form-" . $comment["commentId"] . "\")'>Reply</button>";
+
+								if ($_SESSION["admin"] || ($GLOBALS["userID"] == $comment["userId"]))
+									echo "<a href='remove-comment.php?commentID=" . $comment["commentId"] . "&confirmDelete=0'><button>Delete Comment</button></a>";
+
+								echo "</div>";
+								echo "<form style='display:none' id='reply-comment-form-" . $comment["commentId"] . "' method='POST' action='post-comment.php'>";
+								echo "<span style='display:none;'><input readonly type='text' name='postID' value='" . $GLOBALS["postID"] . "'></span>";
+								echo "<span style='display:none;'><input readonly type='text' name='parentCommentID' value='" . $comment["commentId"] . "'></span>";
+								echo "<textarea cols='50' rows='10' minlength='1' name='comment-content' maxlength='500' placeholder='Reply to @" . $comment["username"] . "'></textarea><br>";
+								echo "<input type='Submit' value='Post'>";
+								echo "</form>";
+							}
 
 							$query_allRepliesToTheSameComment = "SELECT * FROM Comments, Users WHERE parentCommentID = " . $comment["commentId"] . " AND Comments.userId = Users.userId;";
 							$results = $GLOBALS["PDO"] -> query($query_allRepliesToTheSameComment);

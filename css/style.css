@@ -136,3 +136,7 @@ nav a {
 .downvoted {
 	border: 0.25em solid #a90009;
 }
+
+.moderator-badge {
+	color: #CC5500;
+}
