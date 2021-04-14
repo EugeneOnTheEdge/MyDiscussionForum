@@ -10,6 +10,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	table {
+  		display: block;
+  		margin-bottom: 1em;
+  	}
+  	td, th {
+  		padding-left: 1em;
+  	}
+
+  </style>
   <?php 
       session_start();
 
@@ -88,53 +98,54 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="well">
-            <h4>Start by searching for users</h4>
-            <hr>
-            <form method="POST" action="adminSearchUser_results.php">
-               <table>
-                 <tr>
-                   <td><label>Username</label></td>
-                   <td><input type="text" name="username" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Email</label></td>
-                   <td><input type="text" name="email" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>First Name</label></td>
-                   <td><input type="text" name="firstName" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                    <td><label>Last Name</label></td>
-                    <td><input type="text" name="lastName" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Account Status</label></td>
-                   <td>
-                     <select name="accountStatus">
-                       <option value="">ALL</option>
-                       <option value="ACTIVE">ACTIVE</option>
-                       <option value="DISABLED">DISABLED</option>
-                     </select>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td><label>Admin</label></td>
-                   <td>
-                     <select name="admin">
-                       <option value="">ALL</option>
-                       <option value="1">ADMIN</option>
-                       <option value="0">NON-ADMIN</option>
-                     </select>
-                   </td>
-                 </tr>
-                 <tr colspan="2">
-                  <td><input type="submit" value="Search"></td>
-                 </tr>
-               </table>
-             </form>
+            <h4>Search Results</h4>
+            <small>
+            	<?php 
+	            	$username = $_POST["username"];
+	            	$email = $_POST["email"];
+	            	$firstName = $_POST["firstName"];
+	            	$lastName = $_POST["lastName"];
+	            	$accountStatus = $_POST["accountStatus"];
+	            	$admin = $_POST["admin"];
+
+	                echo "Users with username similar to '$username' AND email similar to '$email' AND firstName similar to '$firstName' AND lastName similar to '$lastName' AND AccountStatus = '$accountStatus' AND admin = '$admin';";
+	             ?>
+            </small><hr>
+            
+           <table>
+           	<tr>
+           		<th>User ID</th>
+           		<th>Username</th>
+           		<th>Email</th>
+           		<th>First Name</th>
+           		<th>Last Name</th>
+           		<th>Account Status</th>
+           		<th>Admin</th>
+           	</tr>
+           		
+           	<?php 
+           		$query = "SELECT * FROM Users WHERE username LIKE '%$username%' AND email LIKE '%$email%' AND firstName LIKE '%$firstName%' AND lastName LIKE '%$lastName%' AND accountStatus LIKE '%$accountStatus%' AND admin LIKE '%$admin%';";
+				$results = $PDO -> query($query);
+
+				$user = $results -> fetch();
+				while ($user != null) {
+					echo "<tr>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" .  $user["userId"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . $user["username"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . $user["email"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . $user["firstName"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . $user["lastName"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . $user["accountStatus"] . "</a></td>";
+					echo "<td>" . "<a href='adminSearchUser_editUser.php?userID=" . $user["userId"] . "'>" . ($user["admin"] == 1 ? "YES" : "NO") . "</a></td>";
+					echo "</tr>";
+
+					$user = $results -> fetch();
+				}
+           	 ?>            
+           </table>
+           <a href="adminSearchUser.php"><button>Back to Search</button></a>
           </div>
         </div>
       </div>

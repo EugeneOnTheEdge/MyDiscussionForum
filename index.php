@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +25,6 @@
 						$_SESSION["username"] = null;
 						$_SESSION["userId"] = null;
 						$_SESSION["firstName"] = null;
-						$_SESSION["admin"] = false;
-					}
-
-					if ($_SESSION["admin"]) {
-						echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
 					}
 
 					if ($_SESSION["loggedIn"]) {
@@ -38,6 +34,26 @@
 						echo "<a href=\"RegisterAndLogin.php\" id=\"sign-in-button\">Sign In / Sign Up</a>";
 					}
 				 ?>
+
+				 <?php 
+				      if ($_SESSION["loggedIn"]) {
+				        $host = "localhost";
+				        $database = "cosc360-project";
+				        $user = "root";
+				        $pwd = "";
+
+				        $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+
+				        $query = "SELECT admin FROM Users WHERE Users.userId = " . $_SESSION["userId"] . ";";
+				        $result = $PDO -> query($query);
+				        $admin = boolval($result -> fetch()["admin"]);
+
+				        $_SESSION["admin"] = $admin;
+
+				        if ($admin) 
+				          echo "<a href='adminDashboard.php'>Admin Dashboard</a>";
+				      }
+			 	  ?>
 			</nav>
 
 		</header>

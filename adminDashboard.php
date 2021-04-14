@@ -15,15 +15,19 @@
       session_start();
 
       if ($_SESSION["loggedIn"]) {
-        if (boolval($_SESSION["admin"])) {
-          $host = "localhost";
-          $database = "cosc360-project";
-          $user = "root";
-          $pwd = "";
+        $host = "localhost";
+        $database = "cosc360-project";
+        $user = "root";
+        $pwd = "";
 
-          $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
-        }
-        else {
+        $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+
+        $query = "SELECT admin FROM Users WHERE Users.userId = " . $_SESSION["userId"] . ";";
+        $result = $PDO -> query($query);
+        $admin = boolval($result -> fetch()["admin"]);
+
+
+        if (!$admin) {
           echo "<script type='text/javascript'>alert('Hey! You\'re unauthorized to view this page. Only users with admin access can view the Admin Dashboard!'); window.location.href = 'index.php';</script>";
         }
       }
@@ -71,7 +75,7 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>MyDiscussionForum</h2>
+      <h2><a href='index.php'>MyDiscussionForum</a></h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="">Dashboard</a></li>
         <li><a href="adminSearchUser.php">User Account Management</a></li>
