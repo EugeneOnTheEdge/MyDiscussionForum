@@ -15,9 +15,9 @@
 			<nav>
 				<a href="index.php">Home</a>
 				<a href="#">Search</a>
-				<?php 
-					session_start();
+				<?php require 'enforce-user-status.php' ?>
 
+				<?php 
 					$userID = $_SESSION["userId"];
 					$postID = $_GET["postID"];
 
@@ -36,42 +36,53 @@
 
 						$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
-						if (boolval($vote)) { // upvote
-							$query_user_has_upvoted = "SELECT Count(Upvotes.upvoteId) AS NUMBER_OF_UPVOTES FROM Upvotes WHERE commentId = " . $commentID . " AND userId = " . $userID . ";";
 
-							$upvote_result = $PDO -> query($query_user_has_upvoted);
-							$upvote_counts = $upvote_result -> fetch();
-							$upvote_counts = $upvote_counts["NUMBER_OF_UPVOTES"];
+						// Check if comment has been deleted. No more vote modification if comment has been deleted
+						$query = "SELECT commentDeleted FROM Comments WHERE Comments.commentId = $commentID;";
+						$result = $PDO -> query($query);
+						$deleted = $result -> fetch()["commentDeleted"];
 
-							if ($upvote_counts > 0) { // user has voted the comment before
-								$query = "DELETE FROM Upvotes WHERE commentId = $commentID AND userId = $userID;";
-							}
-							else {
-								$query = "INSERT INTO Upvotes (commentId,userId) VALUES ($commentID,$userID);";
-							}	
-							$PDO -> exec($query);
-
-							// Remove any downvotes from the user for the corresponding comments
-							$query = "DELETE FROM Downvotes WHERE commentId = $commentID AND userId = $userID;";
-							$PDO -> exec($query);
+						if (strlen($deleted) > 0) {
+							echo "<script type='text/javascript'>alert('You can\'t cast or change your vote on a deleted comment!');</script>";
 						}
 						else {
-							$query_user_has_downvoted = "SELECT Count(Downvotes.downvoteId) AS NUMBER_OF_DOWNVOTES FROM Downvotes WHERE commentId = " . $commentID . " AND userId = " . $userID . ";";
-							$downvote_result = $PDO -> query($query_user_has_downvoted);
-							$downvote_counts = $downvote_result -> fetch();
-							$downvote_counts = $downvote_counts["NUMBER_OF_DOWNVOTES"];
+							if (boolval($vote)) { // upvote
+								$query_user_has_upvoted = "SELECT Count(Upvotes.upvoteId) AS NUMBER_OF_UPVOTES FROM Upvotes WHERE commentId = " . $commentID . " AND userId = " . $userID . ";";
 
-							if ($downvote_counts > 0) { // user has voted the comment before
+								$upvote_result = $PDO -> query($query_user_has_upvoted);
+								$upvote_counts = $upvote_result -> fetch();
+								$upvote_counts = $upvote_counts["NUMBER_OF_UPVOTES"];
+
+								if ($upvote_counts > 0) { // user has voted the comment before
+									$query = "DELETE FROM Upvotes WHERE commentId = $commentID AND userId = $userID;";
+								}
+								else {
+									$query = "INSERT INTO Upvotes (commentId,userId) VALUES ($commentID,$userID);";
+								}	
+								$PDO -> exec($query);
+
+								// Remove any downvotes from the user for the corresponding comments
 								$query = "DELETE FROM Downvotes WHERE commentId = $commentID AND userId = $userID;";
+								$PDO -> exec($query);
 							}
 							else {
-								$query = "INSERT INTO Downvotes (commentId,userId) VALUES ($commentID,$userID);";
-							}	
-							$PDO -> exec($query);
+								$query_user_has_downvoted = "SELECT Count(Downvotes.downvoteId) AS NUMBER_OF_DOWNVOTES FROM Downvotes WHERE commentId = " . $commentID . " AND userId = " . $userID . ";";
+								$downvote_result = $PDO -> query($query_user_has_downvoted);
+								$downvote_counts = $downvote_result -> fetch();
+								$downvote_counts = $downvote_counts["NUMBER_OF_DOWNVOTES"];
 
-							// Remove any upvotes from the user for the corresponding comments
-							$query = "DELETE FROM Upvotes WHERE commentId = $commentID AND userId = $userID;";
-							$PDO -> exec($query);
+								if ($downvote_counts > 0) { // user has voted the comment before
+									$query = "DELETE FROM Downvotes WHERE commentId = $commentID AND userId = $userID;";
+								}
+								else {
+									$query = "INSERT INTO Downvotes (commentId,userId) VALUES ($commentID,$userID);";
+								}	
+								$PDO -> exec($query);
+
+								// Remove any upvotes from the user for the corresponding comments
+								$query = "DELETE FROM Upvotes WHERE commentId = $commentID AND userId = $userID;";
+								$PDO -> exec($query);
+							}
 						}
 						echo "<script type='text/javascript'>window.location.href = 'show-thread.php?postID=" . $postID . "';</script>";
 					}

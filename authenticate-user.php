@@ -39,8 +39,12 @@
 							$_SESSION["userId"] = $row["userId"];
 							$_SESSION["firstName"] = $row["firstName"];
 							$_SESSION["admin"] = boolval($row["admin"]);
+							$_SESSION["accountStatus"] = $row["accountStatus"];
 
-							echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
+							if ($_SESSION["accountStatus"] == "ACTIVE")
+								echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
+							else
+								echo "<script type='text/javascript'>alert('Uh oh, your account has been disabled by our moderators. Please contact our admins.');window.location.href = 'sign-out.php';</script>";
 						}
 						else {
 							echo "<script type='text/javascript'>alert('Uh oh, you\'ve got an incorrect username and password combination there. Please check it again...'); window.location.href = 'RegisterAndLogin.php';</script>";

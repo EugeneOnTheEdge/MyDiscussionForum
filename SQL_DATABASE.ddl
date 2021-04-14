@@ -42,6 +42,7 @@ CREATE TABLE Comments (
     postId      INT,
     userId      INT,
     comment     VARCHAR(500),
+    commentDeleted  VARCHAR(10), -- <EMPTY> means comment is not deleted; "USER" means comment has been deleted by user; same applies with "ADMIN"
     PRIMARY KEY (commentId),
     FOREIGN KEY (postId) REFERENCES Posts(postId) 
         ON UPDATE CASCADE ON DELETE CASCADE,
