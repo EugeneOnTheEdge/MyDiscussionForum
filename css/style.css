@@ -140,3 +140,7 @@ nav a {
 .moderator-badge {
 	color: #CC5500;
 }
+
+table {
+	width: 100%;
+}

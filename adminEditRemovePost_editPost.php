@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style type="text/css">
+		table {
+			display: block;
+			margin-bottom: 1em;
+		}
+		td, th {
+			padding-left: 1em;
+		}
+	</style>
+
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <?php 
@@ -79,39 +90,54 @@
     </div>
     <br>
     
+    <div class="col-sm-9">
+        <h3>Edit / Remove Posts</h3>
+    </div>
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-8">
           <div class="well">
-            <h4>Start by searching for posts</h4>
-            <hr>
-            <form method="POST" action="adminEditRemovePost_results.php">
-               <table>
-                 <tr>
-                   <td><label>Title</label></td>
-                   <td><input type="text" name="title" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Original Poster Username</label></td>
-                   <td><input type="text" name="opUsername" placeholder="ALL"></td>
-                 </tr>
-                  <tr>
-                   <td><label>Allow anonymous commenting</label></td>
-                   <td>
-                      <select name="anonymousCommenting">
-                        <option value="">ALL</option>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                      </select>
-                    </td>
-                 </tr>
-                 
-                 <tr colspan="2">
-                  <td><input type="submit" value="Search"></td>
-                 </tr>
-               </table>
-             </form>
+            <h4>Search Results</h4>
+            <small>
+            	<?php 
+	            	$postID = $_GET["postID"];
+	             ?>
+            </small><hr>
+            
+           <table>
+           	<tr>
+           		<th>Post ID</th>
+           		<th>OP Username</th>
+           		<th>Title</th>
+           		<th>Content</th>
+              <th>Allow Anonymous Commenting</th>
+           	</tr>
+           		
+           	<?php 
+              $query = "SELECT * FROM Posts, Users WHERE Posts.userId = Users.userId AND postId = $postID;";
+              $results = $PDO -> query($query);
+
+              $post = $results -> fetch();
+              
+              echo "<form id='form-post' method='POST' action='admin_editPost.php'>";
+              echo "<tr><td><input name='postID' type='text' readonly value='" .  $post["userId"] . "' style='background-color:rgb(230,230,230);'></td>";
+              echo "<td><input name='opUsername' type='text' readonly value='" . $post["username"] . "' style='background-color:rgb(230,230,230);'></td>";
+              echo "<td>" . "<input name='title' value='" . $post["title"] . "'></td>";
+              echo "<td>" . "<textarea name='content'>" . $post["content"] . "</textarea></td>";
+              
+              if (boolval($post["allowAnonymousComments"]))
+                echo "<td><select name='anonymousComment'><option value='1'>YES</option><option value='0'>NO</option></select></td>";
+              else
+                echo "<td><select name='anonymousComment'><option value='0'>NO</option><option value='1'>YES</option></select></td>";
+
+              echo "</tr></form>";
+           	 ?>
+           </table>
+           <button onclick='document.getElementById("form-post").submit();'><b>Save</b></button>
+           <a href="adminEditRemovePost.php"><button>Back to Search</button></a>
           </div>
         </div>
       </div>
+      
 </body>
 </html>

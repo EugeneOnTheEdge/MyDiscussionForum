@@ -10,19 +10,33 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	table {
+  		display: block;
+  		margin-bottom: 1em;
+  	}
+  	td, th {
+  		padding-left: 1em;
+  	}
+
+  </style>
   <?php 
       session_start();
 
       if ($_SESSION["loggedIn"]) {
-        if (boolval($_SESSION["admin"])) {
-          $host = "localhost";
-          $database = "cosc360-project";
-          $user = "root";
-          $pwd = "";
+        $host = "localhost";
+        $database = "cosc360-project";
+        $user = "root";
+        $pwd = "";
 
-          $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
-        }
-        else {
+        $PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
+
+        $query = "SELECT admin FROM Users WHERE Users.userId = " . $_SESSION["userId"] . ";";
+        $result = $PDO -> query($query);
+        $admin = boolval($result -> fetch()["admin"]);
+
+
+        if (!$admin) {
           echo "<script type='text/javascript'>alert('Hey! You\'re unauthorized to view this page. Only users with admin access can view the Admin Dashboard!'); window.location.href = 'index.php';</script>";
         }
       }
@@ -60,8 +74,8 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="adminDashboard.php">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">User Account Management</a></li>
-        <li class="active"><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
+        <li class="active"><a href="#">User Account Management</a></li>
+        <li><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul>
     </div>
   </div>
@@ -70,48 +84,39 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>MyDiscussionForum</h2>
+      <h2><a href='index.php'>MyDiscussionForum</a></h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="adminDashboard.php">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">User Account Management</a></li>
-        <li class="active"><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
+        <li class="active"><a href="#">User Account Management</a></li>
+        <li><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
       </ul><br>
     </div>
     <br>
     
+    <div class="col-sm-9">
+        <h3>Edit / Remove Posts</h3>
+    </div>
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-8">
           <div class="well">
-            <h4>Start by searching for posts</h4>
-            <hr>
-            <form method="POST" action="adminEditRemovePost_results.php">
-               <table>
-                 <tr>
-                   <td><label>Title</label></td>
-                   <td><input type="text" name="title" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Original Poster Username</label></td>
-                   <td><input type="text" name="opUsername" placeholder="ALL"></td>
-                 </tr>
-                  <tr>
-                   <td><label>Allow anonymous commenting</label></td>
-                   <td>
-                      <select name="anonymousCommenting">
-                        <option value="">ALL</option>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                      </select>
-                    </td>
-                 </tr>
-                 
-                 <tr colspan="2">
-                  <td><input type="submit" value="Search"></td>
-                 </tr>
-               </table>
-             </form>
+            <h4>Search Results</h4>
+            <small>
+            	<?php 
+                	$postID = $_POST["postID"];
+                  $title = $_POST["title"];
+                	$content = $_POST["content"];
+                	$allowAnonymousComments = $_POST["anonymousComment"];
+
+                	$query = "UPDATE Posts SET title = '$title', content = '$content', allowAnonymousComments = $allowAnonymousComments;";
+                	$PDO -> exec($query);
+
+                  echo "<script type='text/javascript'>alert('Post has been updated!');window.location.href='adminEditRemovePost_editPost.php?postID=" . $postID . "';</script>";
+	             ?>
+            </small><hr>
           </div>
         </div>
       </div>
+      
 </body>
 </html>
