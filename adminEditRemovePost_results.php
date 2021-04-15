@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style type="text/css">
+		table {
+			display: block;
+			margin-bottom: 1em;
+		}
+		td, th {
+			padding-left: 1em;
+		}
+	</style>
+
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <?php 
@@ -79,39 +90,57 @@
     </div>
     <br>
     
+    <div class="col-sm-9">
+        <h3>Edit / Remove / Enable / Disable Posts</h3>
+    </div>
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="well">
-            <h4>Start by searching for posts</h4>
-            <hr>
-            <form method="POST" action="adminEditRemovePost_results.php">
-               <table>
-                 <tr>
-                   <td><label>Title</label></td>
-                   <td><input type="text" name="title" placeholder="ALL"></td>
-                 </tr>
-                 <tr>
-                   <td><label>Original Poster Username</label></td>
-                   <td><input type="text" name="opUsername" placeholder="ALL"></td>
-                 </tr>
-                  <tr>
-                   <td><label>Allow anonymous commenting</label></td>
-                   <td>
-                      <select name="anonymousCommenting">
-                        <option value="">ALL</option>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                      </select>
-                    </td>
-                 </tr>
-                 
-                 <tr colspan="2">
-                  <td><input type="submit" value="Search"></td>
-                 </tr>
-               </table>
-             </form>
+            <h4>Search Results</h4>
+            <small>
+            	<?php 
+	            	$title = $_POST["title"];
+	            	$opUsername = $_POST["opUsername"];
+	            	$anonymousCommenting = $_POST["anonymousCommenting"];
+	            	$ac = strlen($anonymousCommenting) > 0 ? " AND allowAnonymousComments = $anonymousCommenting;" : ";";
+
+	                echo "Posts with titles similar to '$title' AND original poster's username similar to '$opUsername'.";
+	             ?>
+            </small><hr>
+            
+           <table>
+           	<tr>
+           		<th>Post ID</th>
+           		<th>OP Username</th>
+           		<th>Title</th>
+           		<th>Date Posted</th>
+           	</tr>
+           		
+           	<?php 
+           		$query = "SELECT * FROM Posts, Users WHERE Posts.userId = Users.userId AND title LIKE '%$title%' AND username LIKE '%$opUsername%' $ac";
+				$results = $PDO -> query($query);
+
+				$thread = $results -> fetch();
+
+				while ($thread != null) {
+					echo "<tr>";
+					
+					echo "<td>" . "<a href='adminEditRemovePost_editPost.php?postID=" . $thread["postId"] . "'>" .  $thread["postId"] . "</a></td>";
+					echo "<td>" . "<a href='adminEditRemovePost_editPost.php?postID=" . $thread["postId"] . "'>" . $thread["username"] . "</a></td>";
+					echo "<td>" . "<a href='adminEditRemovePost_editPost.php?postID=" . $thread["postId"] . "'>" . $thread["title"] . "</a></td>";
+					echo "<td>" . "<a href='adminEditRemovePost_editPost.php?postID=" . $thread["postId"] . "'>" . $thread["time"] . "</a></td>";
+					
+					echo "</tr>";
+
+					$thread = $results -> fetch();
+				}
+           	 ?>
+           </table>
+           <a href="adminEditRemovePost.php"><button>Back to Search</button></a>
           </div>
         </div>
       </div>
+      
 </body>
 </html>
