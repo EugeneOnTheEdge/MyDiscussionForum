@@ -74,14 +74,13 @@ CREATE TABLE Downvotes (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('ADMIN','COSC360-Group5','admin@cosc360group5.com','admin','cosc360group5', 1, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('King','Thompson','KinThompson@gmail.com','KinThompson','ThompsonKing', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Anderson','Aria','AndAria@gmail.com','AndAria','AriaAnderson', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Elizabeth','Charlotte','EliCharlotte@gmail.com','EliCharlotte','CharlotteElizabeth', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Sofia','Noah','SofNoah@gmail.com','SofNoah','NoahSofia', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Henry','Sebastian','HenSebastian@gmail.com','HenSebastian','SebastianHenry', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Garcia','William','GarWilliam@gmail.com','GarWilliam','WilliamGarcia', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Hill','Oliver','HilOliver@gmail.com','HilOliver','OliverHill', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Elijah','Sofia','EliSofia@gmail.com','EliSofia','SofiaElijah', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('King','Smith','KinSmith@gmail.com','KinSmith','SmithKing', 0, "ACTIVE");
-INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Amelia','Olivia','AmeOlivia@gmail.com','AmeOlivia','OliviaAmelia', 0, "ACTIVE");
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('ADMIN','COSC360-Group5','admin@cosc360group5.com','admin','$2y$10$bnrUznhxnWFhtNMPi8QbmujL4wGLmpU0E9YRWWslziKyHS2U2JQF.', 1, "ACTIVE"); -- PWD: cosc360group5
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('King','Thompson','KinThompson@gmail.com','KinThompson','$2y$10$By66YrgdJbS1QgP9cZ5am.6vqqnhEMYZWV2ewrvMkT4tcQ0.3fMkK', 0, "ACTIVE"); -- PWD: ThompsonKing
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Anderson','Aria','AndAria@gmail.com','AndAria','$2y$10$Ym80VJL5eBOEx73MhVTrp.me0BFmXm4lkVFHtLyZPVMnQ/d4EBFZC', 0, "ACTIVE"); -- PWD: AriaAnderson
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Elizabeth','Charlotte','EliCharlotte@gmail.com','EliCharlotte','$2y$10$r1L.gN7h8948ZD1MyTkB9.BFU5X44faMOcQJoOTgT8TfkK.Er/v/m', 0, "ACTIVE"); -- PWD: CharlotteElizabeth
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Sofia','Noah','SofNoah@gmail.com','SofNoah','$2y$10$acNeJ2qtTnm6qDYzGo11b.mzR6PtbJBo/O7j5QSyrbnbsDUdJ/4pq', 0, "ACTIVE"); -- PWD: NoahSofia
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Henry','Sebastian','HenSebastian@gmail.com','HenSebastian','$2y$10$iAL4j5f2AntwYWdIh9zbveeQImKt6IVYGMNlzjxuBhWVR7j/gfcUi', 0, "ACTIVE"); -- PWD: SebastianHenry
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Garcia','William','GarWilliam@gmail.com','GarWilliam','$2y$10$iI8yfEcCYCwk4H27pJzNROPDdaPa2IvB4aX9/C.PenArDM3.rDk1.', 0, "ACTIVE"); -- PWD: WilliamGarcia
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Hill','Oliver','HilOliver@gmail.com','HilOliver','$2y$10$i6o81Jkqbaj19Dv5Q8L3wOk.pHAZP.U5nqLyv922TnKkIU9TFE8nu', 0, "ACTIVE"); -- PWD: OliverHill
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Elijah','Sofia','EliSofia@gmail.com','EliSofia','$2y$10$dTMJdMCfaZpoGDkJt37SjOXz7YDOQ.fzuSHp0E4sxj8xpxNVfeVcq', 0, "ACTIVE"); -- PWD: SofiaElijah
+INSERT INTO Users(firstName, lastName, email, username, password, admin, accountStatus) VALUES ('Amelia','Olivia','AmeOlivia@gmail.com','AmeOlivia','$2y$10$B3Pd9Q4v8kQERV2.uOf1huWp48lHOn8CCVIyuoXSyRqeL975mtWfq', 0, "ACTIVE"); -- PWD: OliviaAmelia
