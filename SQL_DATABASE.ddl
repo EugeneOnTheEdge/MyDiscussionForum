@@ -4,7 +4,7 @@ CREATE TABLE Users (
     lastName    VARCHAR(40),
     email       VARCHAR(50) NOT NULL,
     username    VARCHAR(50) NOT NULL,
-    password    VARCHAR(30) NOT NULL,
+    password    VARCHAR(255) NOT NULL,
     admin       BOOLEAN,
     accountStatus   VARCHAR(10),
     securityQuestion    VARCHAR(50),
