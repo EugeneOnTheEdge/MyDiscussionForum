@@ -48,7 +48,7 @@
 
 									$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
-									$query1 = "UPDATE Users SET password = '" . $new_password . "' WHERE email = '" . $_SESSION["email"] . "';";
+									$query1 = "UPDATE Users SET password = '" . password_hash($new_password,PASSWORD_DEFAULT) . "' WHERE email = '" . $_SESSION["email"] . "';";
 									$result1 = $PDO->query($query1);
 
 									$row = $result1->fetch();
