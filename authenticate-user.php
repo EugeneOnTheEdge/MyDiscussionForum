@@ -29,22 +29,27 @@
 
 						$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
-						$query1 = "SELECT * FROM Users WHERE username = '" . $username . "' AND password = '" . $password . "';";
+						$query1 = "SELECT * FROM Users WHERE username = '" . $username . "';";
 						$result1 = $PDO->query($query1);
 
 						$row = $result1->fetch();
 						if ($row != null) {
-							$_SESSION["loggedIn"] = true;
-							$_SESSION["username"] = $row["username"];
-							$_SESSION["userId"] = $row["userId"];
-							$_SESSION["firstName"] = $row["firstName"];
-							$_SESSION["admin"] = boolval($row["admin"]);
-							$_SESSION["accountStatus"] = $row["accountStatus"];
+							if (password_verify($password, $row["password"])) {
+								$_SESSION["loggedIn"] = true;
+								$_SESSION["username"] = $row["username"];
+								$_SESSION["userId"] = $row["userId"];
+								$_SESSION["firstName"] = $row["firstName"];
+								$_SESSION["admin"] = boolval($row["admin"]);
+								$_SESSION["accountStatus"] = $row["accountStatus"];
 
-							if ($_SESSION["accountStatus"] == "ACTIVE")
-								echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
-							else
-								echo "<script type='text/javascript'>alert('Uh oh, your account has been disabled by our moderators. Please contact our admins.');window.location.href = 'sign-out.php';</script>";
+								if ($_SESSION["accountStatus"] == "ACTIVE")
+									echo "<script type='text/javascript'>window.location.href = 'index.php';</script>";
+								else
+									echo "<script type='text/javascript'>alert('Uh oh, your account has been disabled by our moderators. Please contact our admins.');window.location.href = 'sign-out.php';</script>";
+							}
+							else {
+								echo "<script type='text/javascript'>alert('Uh oh, you\'ve got an incorrect username and password combination there. Please check it again...'); window.location.href = 'RegisterAndLogin.php';</script>";
+							}
 						}
 						else {
 							echo "<script type='text/javascript'>alert('Uh oh, you\'ve got an incorrect username and password combination there. Please check it again...'); window.location.href = 'RegisterAndLogin.php';</script>";

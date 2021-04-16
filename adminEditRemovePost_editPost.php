@@ -101,6 +101,7 @@
             <small>
             	<?php 
 	            	$postID = $_GET["postID"];
+                $GLOBALS["postID"] = $postID;
 	             ?>
             </small><hr>
             
@@ -135,6 +136,8 @@
            </table>
            <button onclick='document.getElementById("form-post").submit();'><b>Save</b></button>
            <a href="adminEditRemovePost.php"><button>Back to Search</button></a>
+           <?php echo "<a href='admin_removePost.php?postID=" . $GLOBALS["postID"] . "&confirmDelete=0'><button>Remove Post</button></a>"; ?>
+           </a>
           </div>
         </div>
       </div>

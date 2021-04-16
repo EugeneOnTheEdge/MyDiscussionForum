@@ -111,7 +111,7 @@
                 	$query = "UPDATE Posts SET title = '$title', content = '$content', allowAnonymousComments = $allowAnonymousComments;";
                 	$PDO -> exec($query);
 
-                  echo "<script type='text/javascript'>alert('Post has been updated!');window.location.href='adminEditRemovePost_editPost.php?postID=" . $postID . "';</script>";
+                  echo "<script type='text/javascript'>alert('Post has been updated!');window.location.href='adminEditRemovePost.php';</script>";
 	             ?>
             </small><hr>
           </div>

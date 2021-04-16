@@ -42,7 +42,7 @@
 							$anonymous_comment = 0;
 						}
 
-						$query = "INSERT INTO Posts (time,title,content,userId,views,allowAnonymousComments) VALUES (CURRENT_TIMESTAMP,\"" . $_POST["title"] . "\",\"" . $_POST["content"] . "\"," . $_SESSION["userId"] . ",0," . $anonymous_comment . ");";
+						$query = "INSERT INTO Posts (time,title,content,userId,views,allowAnonymousComments,lastUpdate) VALUES (CURRENT_TIMESTAMP,\"" . $_POST["title"] . "\",\"" . $_POST["content"] . "\"," . $_SESSION["userId"] . ",0," . $anonymous_comment . ", CURRENT_TIMESTAMP);";
 						//echo "$query <br>";
 						
 						$PDO->exec($query);
