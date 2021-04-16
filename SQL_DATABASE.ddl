@@ -29,6 +29,7 @@ CREATE TABLE Posts (
     userId      INT,
     views       INT,
     allowAnonymousComments      BOOLEAN,
+    lastUpdate  TIMESTAMP,
     PRIMARY KEY (postId),
     FOREIGN KEY (userId) REFERENCES Users(userId)
         ON UPDATE CASCADE ON DELETE CASCADE
