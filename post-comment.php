@@ -36,11 +36,12 @@
 
 						$PDO = new PDO("mysql: host=localhost ; dbname=cosc360-project", $user, $pwd);
 
-						// Check if user account with the same email address / username already exists
-						$query1 = "INSERT INTO Comments (parentCommentId,commentTime,postId,userId,comment) VALUES (" . $parentCommentID . ",CURRENT_TIMESTAMP," . $postID . "," . $userID . ",'" . $commentContent . "');";
 						$query1 = "INSERT INTO Comments (parentCommentId,commentTime,postId,userId,comment) VALUES (" . $parentCommentID . ",CURRENT_TIMESTAMP," . $postID . "," . $userID . ",'" . $commentContent . "');";
 
 						$result1 = $PDO->exec($query1);
+
+						$query_updateLastUpdate = "UPDATE Posts SET lastUpdate = CURRENT_TIMESTAMP WHERE postId = $postID;";
+						$PDO -> exec($query_updateLastUpdate);
 
 						echo "<script type='text/javascript'>alert('Your comment has been posted!');</script>";
 						echo "<script type='text/javascript'>window.location.href = 'show-thread.php?postID=" . $postID . "';</script>";
