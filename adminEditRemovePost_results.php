@@ -8,8 +8,11 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-	<style type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href = "css/adminStyle.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <style type="text/css">
 		table {
 			display: block;
 			margin-bottom: 1em;
@@ -61,9 +64,8 @@
 <div class="sidebar">
   <h1><a href='index.php'>MyDiscussionForum</a></h1>
   <a href="adminDashboard.php">Dashboard</a>
-  <a href="adminSearchUser.php">Search Users</a>
   <a href="adminSearchUser.php">User Account Management</a>
-  <class="active"><a href="#">Edit / Remove Posts</a>
+  <a class="active" href="#">Edit / Remove Posts</a>
 </div>
 
 <!-- <nav class="navbar navbar-inverse visible-xs">
@@ -90,21 +92,6 @@
 
 <div class="container-fluid">
   <div class="row content">
-    <div class="col-sm-3 sidenav hidden-xs">
-      <h2>MyDiscussionForum</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="adminDashboard.php">Dashboard</a></li>
-        <li><a href="adminSearchUser.php">User Account Management</a></li>
-        <li class="active"><a href="adminEditRemovePost.php">Edit / Remove Posts</a></li>
-      </ul><br>
-    </div>
-    <br>
-    
-    <div class="col-sm-9">
-        <h3>Edit / Remove / Enable / Disable Posts</h3>
-    </div>
-
-    <div class="row">
         <div class="col-sm-6">
           <div class="well">
             <h4>Search Results</h4>

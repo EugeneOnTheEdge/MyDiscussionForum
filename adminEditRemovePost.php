@@ -8,9 +8,10 @@
  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- Latest compiled JavaScript -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href = "css/adminStyle.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <?php 
       session_start();
 
@@ -71,9 +72,8 @@
 <div class="sidebar">
   <h1><a href='index.php'>MyDiscussionForum</a></h1>
   <a href="adminDashboard.php">Dashboard</a>
-  <a href="adminSearchUser.php">Search Users</a>
-  <!-- <a href="adminEndableDisableUser.php">Enable / Disable Users</a> -->
-  <class="active"><a href="#">Edit / Remove Posts</a>
+  <a href="adminSearchUser.php">User Account Management</a>
+  <a class="active" href="#">Edit / Remove Posts</a>
 </div>
 
 <div class = "content">

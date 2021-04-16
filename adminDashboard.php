@@ -2,8 +2,8 @@
 <html>
 <head>
 <title>MyDiscussionForum</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href = "css/adminStyle.css">
 <link rel="stylesheet" href = "css/style.css">
@@ -39,16 +39,16 @@
 
 <div class="sidebar">
 <h1><a href='index.php'>MyDiscussionForum</a></h1>
-  <class="active"><a href="#">Dashboard</a>
-  <a href="adminSearchUser.php">Search Users</a>
-  <!-- <a href="adminEnableDisableUser.php">Enable / Disable Users</a> -->
+  <a class="active" href="#">Dashboard</a>
+  <a href="adminSearchUser.php">User Account Management</a>
   <a href="adminEditRemovePost.php">Edit / Remove Posts</a>
 </div>
 
 <div class="content">
   <h2>Dashboard</h2>
   <h4>Registered Users</h4>
-</div>
+  <div>
+    <div>
               <?php 
                   $query_registeredUsers =  "SELECT COUNT(Users.userId) AS REGISTERED_USERS FROM Users;";
                   $results = $PDO -> query($query_registeredUsers);
@@ -58,6 +58,8 @@
             </p> 
           </div>
         </div>
+        <div>
+          <div>
             <h4>Posts</h4>
             <p>
               <?php 
@@ -69,6 +71,8 @@
             </p> 
           </div>
         </div>
+        <div>
+          <div>
             <h4>Total Thread Views</h4>
             <p>
               <?php 
@@ -85,6 +89,8 @@
             </p> 
           </div>
         </div>
+        <div>
+          <div>
             <h4>Total Thread Comments</h4>
             <p>
               <?php 

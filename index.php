@@ -47,7 +47,10 @@
 						echo "<div class='threads'>";
 						echo "<h4><a href='show-thread.php?postID=" . $thread["postId"] . "'>" . $thread["title"] . "</a></h4>";
 						echo "<p>" . $thread["content"] . "</p><hr>";
-						echo "<small>By " . $thread["username"] . " on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+						if (boolval($thread["admin"]))
+							echo "<small>By <span class='moderator-badge'>" . $thread["username"] . " (mod)</span> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+						else
+							echo "<small>By " . $thread["username"] . " on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
 						echo "</div>";
 
 						$thread = $result->fetch();
@@ -66,7 +69,10 @@
 						echo "<div class='threads'>";
 						echo "<h4><a href='show-thread.php?postID=" . $thread["postId"] . "'>" . $thread["title"] . "</a></h4>";
 						echo "<p>" . $thread["content"] . "</p><hr>";
-						echo "<small>By " . $thread["username"] . " on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+						if (boolval($thread["admin"]))
+							echo "<small>By <span class='moderator-badge'>" . $thread["username"] . " (mod)</span> on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
+						else
+							echo "<small>By " . $thread["username"] . " on " . $thread["time"] . " / Views: " . $thread["views"] . "</small>";
 						echo "</div>";
 
 						$thread = $result->fetch();
