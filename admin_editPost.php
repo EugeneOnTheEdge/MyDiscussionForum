@@ -61,7 +61,15 @@
 
 <body>
 
-<nav class="navbar navbar-inverse visible-xs">
+<div class="sidebar">
+  <h1><a href='index.php'>MyDiscussionForum</a></h1>
+  <a href="adminDashboard.php">Dashboard</a>
+  <a href="adminSearchUser.php">Search Users</a>
+  <a href="adminEnableDisableUser.php">Enable / Disable Users</a>
+  <class="active"><a href="#">Edit / Remove Posts</a>
+</div>
+
+<!-- <nav class="navbar navbar-inverse visible-xs">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -80,6 +88,7 @@
     </div>
   </div>
 </nav>
+  -->
 
 <div class="container-fluid">
   <div class="row content">

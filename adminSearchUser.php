@@ -5,11 +5,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href = "css/adminStyle.css">
   <?php 
       session_start();
 
@@ -51,7 +52,7 @@
 
 <body>
 
-<nav class="navbar navbar-inverse visible-xs">
+<!-- <nav class="navbar navbar-inverse visible-xs">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -69,7 +70,15 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+
+<div class="sidebar">
+  <h1><a href='index.php'>MyDiscussionForum</a></h1>
+  <a href="adminDashboard.php">Dashboard</a>
+  <class="active"><a href="#">Search Users</a>
+  <a href="adminEnableDisableUser.php">Enable / Disable Users</a>
+  <a href="adminEditRemovePost.php">Edit / Remove Posts</a>
+</div>
 
 <div class="container-fluid">
   <div class="row content">
@@ -82,7 +91,7 @@
       </ul><br>
     </div>
     <br>
-    
+  
     <div class="col-sm-9">
         <h3>Edit / Remove / Enable / Disable Users</h3>
     </div>

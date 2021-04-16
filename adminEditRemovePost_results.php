@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -58,7 +58,15 @@
 
 <body>
 
-<nav class="navbar navbar-inverse visible-xs">
+<div class="sidebar">
+  <h1><a href='index.php'>MyDiscussionForum</a></h1>
+  <a href="adminDashboard.php">Dashboard</a>
+  <a href="adminSearchUser.php">Search Users</a>
+  <a href="adminSearchUser.php">User Account Management</a>
+  <class="active"><a href="#">Edit / Remove Posts</a>
+</div>
+
+<!-- <nav class="navbar navbar-inverse visible-xs">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -77,6 +85,8 @@
     </div>
   </div>
 </nav>
+
+  -->
 
 <div class="container-fluid">
   <div class="row content">

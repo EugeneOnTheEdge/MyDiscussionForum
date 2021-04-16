@@ -4,7 +4,7 @@ html, body {
 	width: 100%;
 	margin: 0em;
 	padding: 0em;
-	background-color: gray;  
+	background-color: lightgray;  
 }
 
 header {
@@ -145,3 +145,4 @@ nav a {
 table {
 	width: 100%;
 }
+
