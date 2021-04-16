@@ -72,12 +72,45 @@
   <h1><a href='index.php'>MyDiscussionForum</a></h1>
   <a href="adminDashboard.php">Dashboard</a>
   <a href="adminSearchUser.php">Search Users</a>
-  <a href="adminEndableDisableUser.php">Enable / Disable Users</a>
+  <!-- <a href="adminEndableDisableUser.php">Enable / Disable Users</a> -->
   <class="active"><a href="#">Edit / Remove Posts</a>
 </div>
 
+<div class = "content">
+<div class="well">
+    <h4>Start by searching for posts</h4>
+    <hr>
+    <form method="POST" action="adminEditRemovePost_results.php">
+        <table>
+          <tr>
+            <td><label>Title</label></td>
+            <td><input type="text" name="title" placeholder="ALL"></td>
+          </tr>
+          <tr>
+            <td><label>Original Poster Username</label></td>
+            <td><input type="text" name="opUsername" placeholder="ALL"></td>
+          </tr>
+          <tr>
+            <td><label>Allow anonymous commenting</label></td>
+            <td>
+              <select name="anonymousCommenting">
+                <option value="">ALL</option>
+                <option value="1">YES</option>
+                <option value="0">NO</option>
+              </select>
+            </td>
+          </tr>
+          
+          <tr colspan="2">
+          <td><input type="submit" value="Search"></td>
+          </tr>
+        </table>
+      </form>
+  </div>
+</div>
 
-<div class="container-fluid">
+
+<!-- <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
       <h2>MyDiscussionForum</h2>
@@ -122,6 +155,6 @@
              </form>
           </div>
         </div>
-      </div>
+      </div> -->
 </body>
 </html>

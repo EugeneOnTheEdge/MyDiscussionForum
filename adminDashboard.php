@@ -41,7 +41,7 @@
 <h1><a href='index.php'>MyDiscussionForum</a></h1>
   <class="active"><a href="#">Dashboard</a>
   <a href="adminSearchUser.php">Search Users</a>
-  <a href="adminEnableDisableUser.php">Enable / Disable Users</a>
+  <!-- <a href="adminEnableDisableUser.php">Enable / Disable Users</a> -->
   <a href="adminEditRemovePost.php">Edit / Remove Posts</a>
 </div>
 

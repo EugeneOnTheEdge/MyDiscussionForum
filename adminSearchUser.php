@@ -76,11 +76,62 @@
   <h1><a href='index.php'>MyDiscussionForum</a></h1>
   <a href="adminDashboard.php">Dashboard</a>
   <class="active"><a href="#">Search Users</a>
-  <a href="adminEnableDisableUser.php">Enable / Disable Users</a>
+  <!-- <a href="adminEnableDisableUser.php">Enable / Disable Users</a> -->
   <a href="adminEditRemovePost.php">Edit / Remove Posts</a>
 </div>
 
-<div class="container-fluid">
+<div class = "content">
+  <h3>Edit / Remove / Enable / Disable Users</h3>
+  <div class="well">
+      <h4>Start by searching for users</h4>
+      <hr>
+      <form method="POST" action="adminSearchUser_results.php">
+          <table>
+            <tr>
+              <td><label>Username</label></td>
+              <td><input type="text" name="username" placeholder="ALL"></td>
+            </tr>
+            <tr>
+              <td><label>Email</label></td>
+              <td><input type="text" name="email" placeholder="ALL"></td>
+            </tr>
+            <tr>
+              <td><label>First Name</label></td>
+              <td><input type="text" name="firstName" placeholder="ALL"></td>
+            </tr>
+            <tr>
+              <td><label>Last Name</label></td>
+              <td><input type="text" name="lastName" placeholder="ALL"></td>
+            </tr>
+            <tr>
+              <td><label>Account Status</label></td>
+              <td>
+                <select name="accountStatus">
+                  <option value="">ALL</option>
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="DISABLED">DISABLED</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Admin</label></td>
+              <td>
+                <select name="admin">
+                  <option value="">ALL</option>
+                  <option value="1">ADMIN</option>
+                  <option value="0">NON-ADMIN</option>
+                </select>
+              </td>
+            </tr>
+            <tr colspan="2">
+            <td><input type="submit" value="Search"></td>
+            </tr>
+          </table>
+        </form>
+    </div>
+  </div>
+
+<!-- <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
       <h2><a href='index.php'>MyDiscussionForum</a></h2>
@@ -146,7 +197,7 @@
              </form>
           </div>
         </div>
-      </div>
+      </div> -->
       
 </body>
 </html>
